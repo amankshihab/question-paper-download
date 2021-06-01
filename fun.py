@@ -60,12 +60,16 @@ count = 0
 for download_url in result:
     count += 1
     print(f"Downloading pdf {count}")
-    to_download = requests.get(download_url)
+    try:
+        to_download = requests.get(download_url)
+    except:
+        print("Error while downloading pdf")
+        raise SystemExit()
     try:
         pdf = open(f"<path/to/directory>/qp{count}.pdf", "wb")
     except:
         print("Error while writing into file")
-        raise SystemExit(1)
+        raise SystemExit()
     pdf.write(to_download.content)
     pdf.close()
 
